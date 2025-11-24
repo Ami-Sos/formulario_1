@@ -1,0 +1,345 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Junnie Store</title>
+  <link href="https://fonts.googleapis.com/css2?family=Pacifico&display=swap" rel="stylesheet">
+  <style>
+    :root {
+      --rosa-fuerte: #ff99c8;
+      --rosa-pastel: #ffddeb;
+      --azul-pastel: #c9e5ff;
+      --blanco: #fffdf9;
+      --negro: #000000;
+    }
+
+    body {
+      margin: 0;
+      font-family: 'Gochi Hand', sans-serif;
+      background-color: var(--rosa-pastel);
+      color: var(--negro);
+    }
+
+    header {
+      background-color: var(--rosa-fuerte);
+      color: var(--blanco);
+      padding: 1.5rem;
+      text-align: center;
+    }
+
+    nav {
+      background-color: var(--azul-pastel);
+      padding: 0.8rem;
+      display: flex;
+      justify-content: center;
+      gap: 2rem;
+    }
+
+    nav a {
+      color: var(--negro);
+      text-decoration: none;
+      font-weight: bold;
+    }
+
+    section {
+      padding: 2rem;
+    }
+
+    h2 {
+      color: var(--rosa-fuerte);
+    }
+
+    .info-box {
+      background-color: var(--blanco);
+      padding: 1.5rem;
+      border-radius: 10px;
+      box-shadow: 0 2px 6px rgba(0,0,0,0.15);
+    }
+
+    /*Canvas*/
+    canvas {
+      border: 2px solid var(--rosa-fuerte);
+      border-radius: 8px;
+      background-color: var(--blanco);
+      width: 100%;
+      max-width: 600px;
+    }
+
+    .controles button {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 6px;
+      background-color: var(--rosa-fuerte);
+      color: var(--blanco);
+      cursor: pointer;
+      margin: 0.5rem;
+    }
+
+    footer {
+      background-color: var(--rosa-fuerte);
+      color: var(--blanco);
+      text-align: center;
+      padding: 1rem;
+    }
+
+    /*Formulario*/
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 1rem;
+    }
+
+    form input, form select {
+      padding: 10px;
+      border-radius: 6px;
+      border: 1px solid #ccc;
+      font-size: 1rem;
+    }
+
+    form button {
+      background-color: var(--rosa-fuerte);
+      color: white;
+      padding: 12px;
+      border: none;
+      border-radius: 8px;
+      cursor: pointer;
+      font-size: 1.1rem;
+    }
+
+	#productos {
+  text-align: center;
+  padding: 20px 0;
+}
+
+	#productos h2 {
+  margin-bottom: 20px;
+}
+
+	.producto {
+  background: #fdfdfd;
+  padding: 18px 20px;
+  margin: 15px auto;
+  width: 90%;
+  max-width: 350px;
+  border-radius: 12px;
+  box-shadow: 0 0 10px rgba(0,0,0,0.08);
+}
+
+	.producto h3 {
+  margin: 0;
+  font-size: 1.2rem;
+}
+
+	.producto p {
+  margin: 6px 0;
+  font-size: 0.95rem;
+}
+
+	.producto .precio {
+  display: block;
+  margin-top: 8px;
+  font-weight: bold;
+  font-size: 1rem;
+}
+
+/*Centrar toda la sección*/
+#preview {
+  text-align: center;
+  margin-top: 40px;
+}
+
+/*Efecto para el título*/
+#preview h2 {
+  font-size: 1.8rem;
+  font-weight: bold;
+  color: #ff69b4;
+  text-shadow: 2px 2px 8px rgba(255, 105, 180, 0.4),
+               -2px -2px 8px rgba(255, 182, 193, 0.3);
+  margin-bottom: 20px;
+}
+
+/*Centrar*/
+#preview canvas {
+  display: block;
+  margin: 0 auto;
+  border: 3px solid #ffc7dd;
+  border-radius: 12px;
+  box-shadow: 0 0 12px rgba(255, 182, 193, 0.4);
+}
+
+/*Botones*/
+.controles {
+  margin-top: 20px;
+}
+
+.controles button {
+  background: #ffb6d9;
+  border: none;
+  padding: 10px 18px;
+  margin: 0 8px;
+  border-radius: 12px;
+  cursor: pointer;
+  font-size: 1rem;
+  transition: 0.3s ease;
+  box-shadow: 0 4px 8px rgba(0,0,0,0.1);
+}
+
+.controles button:hover {
+  background: #ff8fc6;
+  transform: scale(1.06);
+}
+
+  </style>
+</head>
+
+<body>
+  <header>
+    <h1>Junnie Store</h1>
+    <p>Hola! Somos Junnie Store, aquí podrás encontrar cositas muy lindas hechas con amor y totalmente a mano, queremos acompañarte en tu día a día haciéndolo todo más lindo... Bienvenida! 🌈</p>
+  </header>
+
+  <nav>
+    <a href="#nosotras">Nosotras</a>
+    <a href="#productos">Productos</a>
+    <a href="#compra">Compra</a>
+  </nav>
+
+  <!-- Sección Nosotras -->
+  <section id="nosotras">
+    <h2>Nosotras</h2>
+    <div class="info-box">
+      <p>En Junnie Store creamos accesorios lindos, personalizados y hechos totalmente a mano desde Puebla. Cada pieza está pensada para acompañarte y hacer tus momentos más especiales. ✨</p>
+    </div>
+  </section>
+  
+<!-- Sección Productos -->
+<section id="productos">
+  <h2>Productos</h2>
+
+  <div class="producto">
+    <h3>Llavero personalizado</h3>
+    <p>Diseño a elegir, con nombre o charms.</p>
+    <span class="precio">$60 o 2x$100</span>
+  </div>
+
+  <div class="producto">
+    <h3>Ramo de Siluetas (22 Siluetas)</h3>
+    <p>Arreglo personalizado con photocards y decoración.</p>
+    <span class="precio">$250</span>
+  </div>
+
+  <div class="producto">
+    <h3>Straps / Accesorios para celular</h3>
+    <p>Straps personalizados para celular.</p>
+    <span class="precio">$30 pequeño / $40 grande</span>
+  </div>
+</section>
+
+<section id="preview">
+  <h2>Vista previa de los productos</h2>
+
+  <canvas id="miCanvas" width="600" height="400"></canvas>
+
+  <div class="controles">
+    <button id="btnLlavero">Llaveros 🧸</button>
+    <button id="btnRamo">Ramo 💐</button>
+    <button id="btnStraps">Straps 📱</button>
+  </div>
+</section>
+
+  <!-- Sección Compra -->
+  <section id="compra">
+    <h2>Realiza tu compra aquí</h2>
+    <div class="info-box">
+      <form>
+        <h2>Formulario de Compra</h2>
+
+        <label>Nombre:</label>
+        <input type="text" placeholder="Ingresa tu nombre" required />
+
+        <label>Contraseña:</label>
+        <input type="text" placeholder="Elige una palabra clave" required />
+
+        <label>Producto:</label>
+        <select required>
+          <option value="">Selecciona tu producto</option>
+          <option value="llavero">Llaveros</option>
+          <option value="ramo">Ramo de Siluetas</option>
+          <option value="strap">Straps para celular</option>
+        </select>
+
+  <label for="cantidad">Cantidad:</label>
+      <input type="number" id="cantidad" name="pedido_cantidad" min="1" value="1" required>
+
+
+        <label>Punto:</label>
+        <select required>
+          <option value="">Selecciona tu punto de entrega</option>
+          <option>Plaza Loreto</option>
+          <option>Parque Puebla</option>
+          <option>Chedraui Xonaca</option>
+          <option>Home Depot de la Pepsi</option>
+          <option>Suburbia de Reforma</option>
+        </select>
+
+
+<label for="fecha">Día de entrega:</label>
+      <input type="date" id="fecha" name="pedido_fecha" required>
+
+      <label for="hora">Hora de entrega:</label>
+      <input type="time" id="hora" name="pedido_hora">
+      
+        <button>Enviar mi pedido 💌</button>
+      </form>
+    </div>
+  </section>
+
+  <footer>
+    <p>© 2025 Junnie Store. Hecho con amor en Puebla para ti 💗</p>
+  </footer>
+
+ <script>
+	fetch(
+	"https://script.google.com/macros/s/AKfycbxVHJJdhUVjZp5Yq5C8X1l_thv-ZPG9elYNRmjCgR_Kmt05-toA1KEfcaEbHhOGvVLH4g/exec"
+	)
+	redirect:"follow",
+		method:"POST",
+			body:"FormDataString,
+				headers:{
+				"Content-Type": "Text/Plain;charset=utf-8"
+				}
+
+ </script>
+
+
+  <!-- JavaScript Canvas -->
+ <script>
+  const canvas = document.getElementById('miCanvas');
+  const context = canvas.getContext('2d');
+
+  /*Imágenes*/
+  const urlLlavero = 'https://i.pinimg.com/736x/02/99/7b/02997b6f9b00d1d40b50a903f726aa02.jpg';
+  const urlRamo = 'https://i.pinimg.com/736x/1f/ea/1d/1fea1db15c56a9d32ea5d5f40b6d81a3.jpg';
+  const urlStraps = 'https://i.pinimg.com/736x/73/01/d5/7301d5e85943fbcc5ee7052001248da0.jpg';
+
+  function cargarImagen(url) {
+    const img = new Image();
+    img.onload = () => {
+      context.clearRect(0, 0, canvas.width, canvas.height);
+      context.drawImage(img, 0, 0, canvas.width, canvas.height);
+    };
+    img.src = url;
+  }
+
+  document.getElementById('btnLlavero').onclick = () => cargarImagen(urlLlavero);
+  document.getElementById('btnRamo').onclick = () => cargarImagen(urlRamo);
+  document.getElementById('btnStraps').onclick = () => cargarImagen(urlStraps);
+
+  context.font = '20px Arial';
+  context.fillText('Selecciona un producto para visualizarlo 💗', 100, 200);
+</script>
+</body>
+</html>
