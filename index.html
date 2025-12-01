@@ -256,46 +256,46 @@
   <section id="compra">
     <h2>Realiza tu compra aquí</h2>
     <div class="info-box">
-    <form name="submit-to-google-sheet">  
-        <h2>Formulario de Compra</h2>
 
-        <label>Nombre</label>
-        <input type="text" placeholder="Ingresa tu nombre" required />
+		
+ <form id="formulario-compra" method="POST" action="https://script.google.com/macros/s/AKfycbytbeETBxQjXk5zT-yTUBhjZdiiu9oqs7jM2mPNxaVDtw0RHle-JyohGLFYzdqKqBdLSQ/exec">  
+    <h2>Formulario de Compra</h2>
 
-        <label>Contraseña</label>
-        <input type="text" placeholder="Elige una palabra clave" required />
+    <label>Nombre</label>
+    <input type="text" name="nombre" placeholder="Ingresa tu nombre" required />
 
-        <label>Producto</label>
-        <select required>
-          <option value="">Selecciona tu producto</option>
-          <option value="llavero">Llaveros</option>
-          <option value="ramo">Ramo de Siluetas</option>
-          <option value="strap">Straps para celular</option>
-        </select>
+    <label>Contraseña</label>
+    <input type="text" name="contrasena" placeholder="Elige una palabra clave" required />
 
-  <label for="cantidad">Cantidad</label>
-      <input type="number" id="cantidad" name="pedido_cantidad" min="1" value="1" required>
+    <label>Producto</label>
+    <select name="producto" required>
+      <option value="">Selecciona tu producto</option>
+      <option value="llavero">Llaveros</option>
+      <option value="ramo">Ramo de Siluetas</option>
+      <option value="strap">Straps para celular</option>
+    </select>
 
+    <label for="cantidad">Cantidad</label>
+    <input type="number" id="cantidad" name="cantidad" min="1" value="1" required>
 
-        <label>Punto</label>
-        <select required>
-          <option value="">Selecciona tu punto de entrega</option>
-          <option>Plaza Loreto</option>
-          <option>Parque Puebla</option>
-          <option>Chedraui Xonaca</option>
-          <option>Home Depot de la Pepsi</option>
-          <option>Suburbia de Reforma</option>
-        </select>
+    <label>Punto de Entrega</label>
+    <select name="punto_entrega" required>
+      <option value="">Selecciona tu punto de entrega</option>
+      <option>Plaza Loreto</option>
+      <option>Parque Puebla</option>
+      <option>Chedraui Xonaca</option>
+      <option>Home Depot de la Pepsi</option>
+      <option>Suburbia de Reforma</option>
+    </select>
 
+    <label for="fecha">Día de entrega</label>
+    <input type="date" id="fecha" name="fecha_entrega" required>
 
-<label for="fecha">Día de entrega</label>
-      <input type="date" id="fecha" name="pedido_fecha" required>
-
-      <label for="hora">Hora de entrega</label>
-      <input type="time" id="hora" name="pedido_hora">
-      
-        <button>Enviar mi pedido 💌</button>
-      </form>
+    <label for="hora">Hora de entrega</label>
+    <input type="time" id="hora" name="hora_entrega">
+    
+    <button type="submit">Enviar mi pedido 💌</button>
+</form>
     </div>
   </section>
 
@@ -332,39 +332,31 @@
   context.fillText('Selecciona un producto para visualizarlo 💗', 100, 200);
 </script>
 	<script>
-    const scriptURL = 'https://script.google.com/macros/s/AKfycbzJXRCu3UbOWO0-tpZwwh0gJNlFA1pcFYpFttvEOQ8S1Xl1wT2oUariWaC4CbszfJLG/exec'
-    const form = document.forms['submit-to-google-sheet']
-    const btnEnviar = form.querySelector('button[type="submit"]')
+  const form = document.forms['formulario-compra']; // Asegúrate que el ID del form sea igual
+  
+  form.addEventListener('submit', e => {
+    e.preventDefault();
+    // Cambiar texto del botón para feedback visual
+    const btn = form.querySelector('button');
+    const textoOriginal = btn.innerHTML;
+    btn.innerHTML = "Enviando... ⏳";
+    btn.disabled = true;
 
-    form.addEventListener('submit', e => {
-      e.preventDefault() // 1. Evita que el navegador vaya a la página blanca
-      
-      // Indicador visual de carga (opcional pero recomendado)
-      const textoOriginal = btnEnviar.innerText;
-      btnEnviar.innerText = "Enviando...";
-      btnEnviar.disabled = true;
-
-      fetch(scriptURL, { method: 'POST', body: new FormData(form)})
-        .then(response => {
-            // 2. Aquí manejamos el éxito
-            alert("¡Gracias! Tu mensaje ha sido enviado correctamente.")
-            form.reset() // Limpia el formulario
-            
-            // Restaurar botón
-            btnEnviar.innerText = textoOriginal;
-            btnEnviar.disabled = false;
-        })
-        .catch(error => {
-            // 3. Aquí manejamos errores
-            console.error('Error!', error.message)
-            alert("Hubo un error al enviar. Por favor intenta de nuevo.")
-            
-            // Restaurar botón
-            btnEnviar.innerText = textoOriginal;
-            btnEnviar.disabled = false;
-        })
-    })
-  </script>
+    fetch(form.action, { method: 'POST', body: new FormData(form)})
+      .then(response => {
+          alert("¡Gracias! Tu pedido ha sido enviado con éxito 💗");
+          form.reset(); // Limpia el formulario
+          btn.innerHTML = textoOriginal;
+          btn.disabled = false;
+      })
+      .catch(error => {
+          alert("Oh no! Hubo un error al enviar el pedido.");
+          console.error('Error!', error.message);
+          btn.innerHTML = textoOriginal;
+          btn.disabled = false;
+      });
+  });
+</script>
 </body>
 </html>
 </body>
